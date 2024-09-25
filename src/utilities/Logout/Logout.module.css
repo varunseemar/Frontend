@@ -1,0 +1,32 @@
+.LogoutMain{
+    margin-left: 86vw;
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    width: 215px;
+    height: 150px;
+    margin-top: -7px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    box-shadow: -2px 2px 7px -5px black;
+}
+.Username{
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 30px;
+    align-self: center;
+}
+.LogoutButton{
+    background-color: #FF7373;
+    border: 0px;
+    color:white;
+    height: 35px;
+    align-self: center;
+    border-radius: 18px;
+    width: 120px;
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}

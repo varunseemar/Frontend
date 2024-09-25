@@ -1,0 +1,93 @@
+.SignInModalContainer{
+    background-color: white;
+    height: 60vh;
+    width: 40vw;
+    margin-top: 20vh;
+    border-radius: 10px;
+}
+.crossIcon{
+    float: right;
+    margin-right: 80px;
+    margin-top: 60px;
+}
+.SignInText{
+    display: flex;
+    justify-content: center;
+    margin-top: 13vh;
+    font-size: 25px;
+    font-weight: 650;
+}
+.SignInForm{
+    display: flex;
+    flex-direction: column;
+    margin-left: 6vw;
+    margin-top: 50px;
+}
+.UsernameSignIn{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 19px;
+    font-weight: 700;
+}
+.UsernameSignIn > input{
+    height: 25px;
+    width: 200px;
+    margin-left: 100px;
+    border: 2px solid black;
+}
+.PasswordSignIn{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 19px;
+    font-weight: 700;
+    display: flex;
+}
+.PasswordSignIn > input{
+    height: 25px;
+    width: 200px;
+    margin-left: 105px;
+    border: 2px solid black;
+}
+.SignInButton{
+    background-color: #73ABFF;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 150px;
+    margin-top: 50px;
+    border: 0px;
+}
+.PasswordSignIn > img{
+    margin-left: -30px;
+    height: 20px;
+    align-self: center;
+}
+.UsernameError{
+    color: red;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+    margin-top: -15px;
+    margin-left: -10px;
+}
+.PasswordError{
+    color: red;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+    margin-top: -15px;
+    margin-left: -10px;
+}
+.WrongLogInError{
+    color: red;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+}

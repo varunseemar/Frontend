@@ -1,0 +1,27 @@
+.RegisterModal{
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    justify-content: center;
+    display: flex;
+}
+.SignInModal{
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    justify-content: center;
+    display: flex;
+}
+.AddStoryModal{
+    position: fixed;
+    z-index: 200;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    justify-content: center;
+    display: flex;
+}

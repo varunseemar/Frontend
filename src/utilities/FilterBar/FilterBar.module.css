@@ -1,0 +1,67 @@
+.FilterBarMain{
+    display: flex;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 30px;
+    overflow-x: scroll;
+    max-width: 100%;
+}
+.FilterBarMain > div{
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    background-size: cover;
+    margin-right: 50px;
+    min-width: 180px;
+    margin-left: 10px;
+}
+.FilterBarAll{
+    background: url(../../Images/All.png) no-repeat center center;
+}
+.FilterBarFood{
+    background: url(../../Images/Food.png) no-repeat center center;
+}
+.FilterBarHealthAndFitness{
+    background: url(../../Images/HealthandFitness.png) no-repeat center center;
+}
+.FilterBarTravel{
+    background: url(../../Images/Travel.png) no-repeat center center;
+}
+.FilterBarMovie{
+    background: url(../../Images/Movie.png) no-repeat center center;
+}
+.FilterBarEducation{
+    background: url(../../Images/Education.png) no-repeat center center;
+}
+.FilterBarWorld{
+    background: url(../../Images/Healthcare.png) no-repeat center center;
+}
+.Overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.OverlayText{
+    color: white;
+    font-size: 25px;
+    font-weight: 600;
+}
+.FilterBarMain::-webkit-scrollbar{
+    height: 8px;
+}
+.FilterBarMain::-webkit-scrollbar-track{
+    background-color: grey;
+    border-radius: 2px;
+}
+.FilterBarMain::-webkit-scrollbar-thumb{
+    background-color: #D9D9D9;
+    border-radius: 5px;
+}
