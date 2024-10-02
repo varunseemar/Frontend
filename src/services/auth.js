@@ -44,3 +44,35 @@ export const loadUser = async ({username})=>{
         throw new Error(err.response.data)
     }
 }
+
+export const saveBookmark = async ({storyId,username})=>{
+    try{
+        const response = await axios.post(`${BACKEND_URL}/auth//Bookmark/${storyId}`,{
+            username
+        },{
+            headers : {
+            'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        return response;
+    }
+    catch(err){
+        throw new Error(err.response.data)
+    }
+}
+
+export const getBookmark = async ({username})=>{
+    try{
+        const response = await axios.get(`${BACKEND_URL}/auth//Bookmark/${username}`,{
+            username
+        },{
+            headers : {
+            'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        return response;
+    }
+    catch(err){
+        throw new Error(err.response.data)
+    }
+}

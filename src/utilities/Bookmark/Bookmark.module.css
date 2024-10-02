@@ -1,0 +1,80 @@
+.Bookmarks{
+    display: grid;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: space-evenly;
+    row-gap: 40px;
+}
+.IndividualBookmark{
+    display: inline-flex;
+    width: 16vw;
+    height: 54vh;
+    position: relative;
+    z-index: 1;
+    grid-column: auto;
+    align-items: flex-end;
+}
+.bookmarktext{
+    grid-column: 1/5;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: 600;
+}
+.IndividualBookmark img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: 1;
+    border-radius: 10px;
+}
+.Heading{
+    font-size: 23px;
+    word-break: break-word;
+    font-weight: 700;
+}
+.Description{
+    word-break: break-word;
+    font-size: 13px;
+    margin-top: 7px;
+}
+.bookmarkHeadingSecription{
+    display: flex;
+    flex-direction: column;
+    width: inherit;
+    padding-bottom: 30px;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: flex-start;
+    height: fit-content;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 2;
+    background-image: linear-gradient(black, transparent);
+}
+
+@media (max-width: 768px){
+.Bookmarks {
+    row-gap: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.IndividualBookmark {
+    width: 90vw;
+    height: 55vh;
+}
+.bookmarktext {
+    font-size: 18px;
+}
+.Heading {
+    font-size: 18px;
+}
+.Description {
+    font-size: 12px;
+}
+}

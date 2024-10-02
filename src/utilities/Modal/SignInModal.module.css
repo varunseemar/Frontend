@@ -91,3 +91,58 @@
     justify-content: center;
     margin-bottom: 0px;
 }
+
+@media (max-width: 768px){
+.SignInModalContainer {
+    width: 60vw;
+    height: 50vh;
+    margin-top: 20vh;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.crossIcon {
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.SignInText {
+    margin-top: 10vh;
+    font-size: 22px;
+}
+
+.SignInForm {
+    margin-left: 0;
+    margin-top: 30px;
+}
+
+.UsernameSignIn, .PasswordSignIn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.UsernameSignIn > input, .PasswordSignIn > input {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+}
+
+.SignInButton {
+    margin-left: 14vw;
+    margin-top: 30px;
+}
+
+.UsernameError, .PasswordError, .WrongLogInError {
+    justify-content: center;
+    display: flex;
+}
+
+.PasswordSignIn > img{
+    margin-left: 50vw;
+    height: 20px;
+    align-self: center;
+    margin-top: -25px;
+}
+}

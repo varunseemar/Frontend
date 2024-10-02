@@ -57,12 +57,14 @@ const RegisterModal = ({closeRegisterModal,displayRegisterModal,openSignInModal}
         }
         setErrors(errors);
         if(Object.keys(errors).length > 0){
+            setLoading(false);
             return;
         }
         if(userData.username === "" || userData.password === ""){
+            setLoading(false);
             return;
         }
-        try {
+        try{
             const {username,password} = userData;
             const response = await register({username,password})
             console.log(response)
@@ -71,7 +73,8 @@ const RegisterModal = ({closeRegisterModal,displayRegisterModal,openSignInModal}
                 closeRegisterModal();
                 openSignInModal();
             }
-        } catch (error) {
+        } 
+        catch(error){
             if(error.message === "User already Registered"){
                 errors.userExist = "Username Already Exist";
                 setErrors(errors);

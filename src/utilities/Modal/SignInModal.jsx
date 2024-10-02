@@ -57,12 +57,14 @@ const SignInModal = ({closeSignInModal,displaySignInModal,setIsLoggedIn}) => {
         }
         setErrors(errors);
         if(Object.keys(errors).length > 0){
+            setLoading(false);
             return;
         }
         if(userData.username === "" || userData.password === ""){
+            setLoading(false);
             return;
         }
-        try {
+        try{
             const {username,password} = userData;
             const response = await login({username,password})
             console.log(response)
@@ -74,7 +76,8 @@ const SignInModal = ({closeSignInModal,displaySignInModal,setIsLoggedIn}) => {
                 setIsLoggedIn(true);
                 closeSignInModal();
             }
-        } catch (error) {
+        } 
+        catch(error){
             if(error.message === "Wrong Username or Password"){
                 errors.wrongLogin = "Wrong Username or Password";
                 setErrors(errors);

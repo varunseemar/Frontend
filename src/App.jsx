@@ -1,5 +1,6 @@
+import React , {useContext} from 'react'
 import styles from './styles/App.module.css'
-import { Router,Route } from 'react-router-dom'
+import {useLocation} from 'react-router-dom';
 import FilterBar from './utilities/FilterBar/FilterBar.jsx'
 import Header from './utilities/Header/Header.jsx'
 import LoggedInHeader from './utilities/Header/LoggedInHeader.jsx'
@@ -7,72 +8,209 @@ import { useEffect, useState } from 'react'
 import RegisterModal from './utilities/Modal/RegisterModal.jsx'
 import SignInModal from './utilities/Modal/SignInModal.jsx'
 import AddStoryModal from './utilities/Modal/AddStoryModal.jsx'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate , useParams} from 'react-router-dom'
 import {Toaster} from 'react-hot-toast'
 import Logout from './utilities/Logout/Logout.jsx'
+import StoryDivs from './utilities/Story/StoryDivs.jsx'
+import DisplayStory from './utilities/Modal/DisplayStory.jsx'
+import Bookmark from './utilities/Bookmark/Bookmark.jsx'
+import axios from 'axios';
+import { BACKEND_URL } from './utils/constants.js';
+import {ScreenSize} from './ScreenSize.jsx'
+import HeaderMobile from './utilities/Header/HeaderMobile.jsx'
+import LoggedInHeaderMobile from './utilities/Header/LoggedInHeaderMobile.jsx'
 
 function App() {
   const [displayRegisterModal,setDisplayRegisterModal] = useState(false);
   const [displaySignInModal,setDisplaySignInModal] = useState(false);
   const [displayAddStoryModal,setDisplayAddStoryModal] = useState(false);
-  const [isModalOpen,setIsModalOpen] = useState(false);
-  const [isLoggedIn,setIsLoggedIn] = useState(true);
+  const [isModalOpen,setIsModalOpen] = useState();
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
   const [displayLogout,setDisplayLogout] = useState(false);
+  const [editUserStory,setEditUserStory] = useState(false);
+  const [editUserStoryId,setEditUserStoryId] = useState(null);
+  const [refreshState,setRefreshState] = useState(0);
+  const [filterCategory,setFilterCategory] = useState(null);
+  const [showDivByFilter,setShowDivByFilter] = useState(false);
+  const [displayStory,setDisplayStory] = useState(false);
+  const [storyModalContent,setStoryModalContent] = useState({})
+  const [storyModalContentId,setStoryModalContentId] = useState(null);
+  const [savedActiveSlide, setSavedActiveSlide] = useState(null);
+  const [activeSlide,setActiveSlide] = useState(0);
+  const [bookmarkedSlides,setBookmarkedSlides] = useState([]);
+  const [likedSlides,setLikedSlides] = useState([]);
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const {storyId,slideId} = useParams();
+  const isMobile = useContext(ScreenSize);
+
+  useEffect(() => {
+      if(storyId && slideId){
+        handleOpenModal(storyId,Number(slideId));
+      }
+  },[storyId,slideId]);
+
+  const fetchStoryById = async(storyId,slideId) => {
+    try{
+      const response = await axios.get(`${BACKEND_URL}/story/${storyId}`)
+      if(response.status === 200){
+      const story = response.data;
+      const slide = story.slides.find(slide => slide.slideId.toString() === slideId.toString());
+        if(slide){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+      else{
+        return false;
+      }
+    }
+    catch(error){
+      console.error(error);
+      return false;
+    }
+  };
+
+  const handleOpenModal = async(storyId,slideId) => {
+    const storyExists = await fetchStoryById(storyId,slideId + 1);
+      if(!storyExists){
+        navigate('/notfound');
+      } 
+      else{
+        setStoryModalContentId(storyId);
+        setActiveSlide(slideId);
+        const response = await axios.get(`${BACKEND_URL}/story/${storyId}`)
+        setStoryModalContent(response.data);
+        openStoryModal();
+        console.log(`Opening modal for story ID: ${storyId}`);
+        setIsModalOpen('Story');
+        setDisplayStory(true);
+      }
+  };
+
+  useEffect(()=>{
+    const loggedInUser = localStorage.getItem('username')
+    if(loggedInUser){
+      setIsLoggedIn(true);
+      fetchBookmarkedSlides();
+      fetchLikedSlides();
+    }
+  },[isLoggedIn])
+
+  const fetchLikedSlides = async () => {
+    try{
+        const loggedInUser = localStorage.getItem('username')
+        const response = await axios.get(`${BACKEND_URL}/auth/like/${loggedInUser}`);
+        setLikedSlides(response.data.likes);
+    } 
+    catch(error){
+        console.error('Failed to fetch likes:', error);
+    }
+  };
+
+  const fetchBookmarkedSlides = async () => {
+    try{
+        const loggedInUser = localStorage.getItem('username')
+        const response = await axios.get(`${BACKEND_URL}/auth/bookmark/${loggedInUser}`);
+        setBookmarkedSlides(response.data.bookmarks);
+    } 
+    catch(error){
+        console.error('Failed to fetch bookmarks:', error);
+    }
+  };
+
+  function openBookmarks() {
+    navigate('/bookmarks');
+  }
 
   function openRegisterModal(){
     setDisplayRegisterModal(true);
-    setIsModalOpen(true);
-    navigate('/Register',{replace : true});
+    setIsModalOpen('Register');
+    navigate('/',{replace : false});
   }
   function closeRegisterModal(){
     setDisplayRegisterModal(false);
-    setIsModalOpen(false);
-    navigate('/',{replace : true});
+    setIsModalOpen();
+    navigate('/',{replace : false});
   }
   function openSignInModal(){
     setDisplaySignInModal(true);
-    setIsModalOpen(true);
-    navigate('/Login',{replace : true});
+    setIsModalOpen('SignIn');
+    navigate('/',{replace : false});
   }
   function closeSignInModal(){
     setDisplaySignInModal(false);
-    setIsModalOpen(false);
-    navigate('/',{replace : true});
+    setIsModalOpen();
+    if(savedActiveSlide !== null) {
+      openStoryModal(); 
+      setTimeout(() => {
+        setActiveSlide(savedActiveSlide);
+      }, 100);
+      setSavedActiveSlide(null);
+    } 
+    else{
+      navigate('/', { replace: false });
+    }
   }
   function openAddStoryModal(){
     setDisplayAddStoryModal(true);
-    setIsModalOpen(true);
-    navigate('/AddStory',{replace : true});
+    setIsModalOpen('AddStory');
+    navigate('/',{replace : false});
   }
   function closeAddStoryModal(){
     setDisplayAddStoryModal(false);
-    setIsModalOpen(false);
-    navigate('/',{replace : true});
+    setIsModalOpen();
+    navigate('/',{replace : false});
+  }
+  function openStoryModal(){
+    setDisplayStory(true);
+    setIsModalOpen('Story');
+  }
+  function closeStoryModal(){
+    setDisplayStory(false);
+    setIsModalOpen();
+    setActiveSlide(0);
+    navigate('/',{replace : false});
   }
   return (
     <>
       <Toaster />
-      {isModalOpen && displayRegisterModal
+      {isModalOpen === 'Register' && displayRegisterModal
       ? <div className={styles.RegisterModal}> <RegisterModal closeRegisterModal={closeRegisterModal} displayRegisterModal={displayRegisterModal} openSignInModal={openSignInModal}/> </div> 
       : ""}
-      {isModalOpen && displaySignInModal
-      ? <div className={styles.SignInModal}> <SignInModal closeSignInModal={closeSignInModal} displaySignInModal={displaySignInModal} setIsLoggedIn={setIsLoggedIn}/> </div>
+      {isModalOpen === 'SignIn' && displaySignInModal
+      ? <div className={styles.SignInModal}> <SignInModal openStoryModal={openStoryModal} storyModalContent={storyModalContent} savedActiveSlide={savedActiveSlide} closeSignInModal={closeSignInModal} displaySignInModal={displaySignInModal} setIsLoggedIn={setIsLoggedIn}/> </div>
       : ""}
-      {isModalOpen && displayAddStoryModal
-      ? <div className={styles.AddStoryModal}> <AddStoryModal closeAddStoryModal={closeAddStoryModal} displayAddStoryModal={displayAddStoryModal} /> </div>
+      {isModalOpen === 'AddStory' && displayAddStoryModal
+      ? <div className={styles.AddStoryModal}> <AddStoryModal editUserStory={editUserStory} closeAddStoryModal={closeAddStoryModal} displayAddStoryModal={displayAddStoryModal} editUserStoryId={editUserStoryId} setRefreshState={setRefreshState} refreshState={refreshState}/> </div>
       : ""}
-
-      {isLoggedIn
-      ? <LoggedInHeader setDisplayLogout={setDisplayLogout} displayLogout={displayLogout} openAddStoryModal={openAddStoryModal}/>
-      : <Header openRegisterModal={openRegisterModal} openSignInModal={openSignInModal} />}
-
-      {displayLogout 
-      ? <Logout setIsLoggedIn={setIsLoggedIn} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout}/>
+      {isModalOpen === 'Story' && displayStory
+      ? <div className={styles.StoryModal}> <DisplayStory setLikedSlides={setLikedSlides} likedSlides={likedSlides} storyModalContentId={storyModalContentId} setBookmarkedSlides={setBookmarkedSlides} bookmarkedSlides={bookmarkedSlides} activeSlide={activeSlide} setActiveSlide={setActiveSlide} openSignInModal={openSignInModal} setSavedActiveSlide={setSavedActiveSlide} isLoggedIn={isLoggedIn} closeStoryModal={closeStoryModal} storyModalContent={storyModalContent} displayStory={displayStory}/> </div>
       : ""}
 
-      <FilterBar />
-      
+      {!isMobile && (isLoggedIn
+      ? (<LoggedInHeader openBookmarks={openBookmarks} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} />)
+      : (<Header openRegisterModal={openRegisterModal} openSignInModal={openSignInModal} />))}
+
+      {isMobile && (isLoggedIn
+      ? (<LoggedInHeaderMobile openBookmarks={openBookmarks} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} />)
+      : (<HeaderMobile openRegisterModal={openRegisterModal} openSignInModal={openSignInModal} />))}
+
+      {displayLogout && !isMobile
+      ? <Logout setLikedSlides={setLikedSlides} setDisplayStory={setDisplayStory} setStoryModalContentId={setStoryModalContentId} setIsModalOpen={setIsModalOpen} setBookmarkedSlides={setBookmarkedSlides} setActiveSlide={setActiveSlide} setSavedActiveSlide={setSavedActiveSlide} setStoryModalContent={setStoryModalContent} setIsLoggedIn={setIsLoggedIn} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout}/>
+      : ""}
+      {location.pathname !== '/bookmarks' && (
+        <>
+        <FilterBar setFilterCategory={setFilterCategory} setShowDivByFilter={setShowDivByFilter}/>
+        <StoryDivs setStoryModalContentId={setStoryModalContentId} setStoryModalContent={setStoryModalContent} openStoryModal={openStoryModal} isLoggedIn={isLoggedIn} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} setEditUserStoryId={setEditUserStoryId} refreshState={refreshState} filterCategory={filterCategory} showDivByFilter={showDivByFilter}/>
+        </>
+      )}
+      {location.pathname === '/bookmarks' && (
+        <Bookmark bookmarkedSlides={bookmarkedSlides}/>
+      )}
     </>
   )
 }

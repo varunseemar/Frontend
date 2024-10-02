@@ -1,6 +1,6 @@
 .AddStoryModalContainer{
     background-color: white;
-    height: 60vh;
+    height: 61vh;
     width: 40vw;
     margin-top: 20vh;
     border-radius: 10px;
@@ -40,8 +40,167 @@
     flex-wrap: wrap;
     background-color: white;
     box-shadow: 0px 0px 4px 0px grey;
-    margin-left: 25px;
+    margin-left: 28px;
     border-radius: 5px;
     font-size: 14px;
     font-weight: 500;
+}
+.Tabs[data-active='true'] {
+    border: 1px solid grey;
+}
+.formdiv{
+    margin-left: 35px;
+    margin-top: 30px;
+}
+.form{
+    font-size: 17px;
+    font-weight: 700;
+}
+.formHeading{
+    margin-left: 100px;
+    width: 250px;
+    height: 25px;
+    border: 2px,solid,black;
+}
+.formDescription{
+    margin-top: 20px;
+    width: 250px;
+    margin-left: 77px;
+    height: 90px;
+    border: 2px,solid,black;
+    resize: none;
+}
+.formImageUrl{
+    margin-left: 118px;
+    width: 250px;
+    margin-top: 15px;
+    border: 2px solid black;
+    height: 25px;
+}
+.formCategory{
+    margin-left: 94px;
+    width: 258px;
+    margin-top: 15px;
+    border: 2px solid black;
+    height: 30px;
+}
+.descriptiondiv{
+    display: flex;
+    align-items: baseline;
+}
+.slideText{
+    font-size: 10px;
+    font-weight: 500;
+    margin-top: 15px;
+    align-self: center;
+    margin-left: 15px;
+}
+.categorydiv{
+    display: flex;
+    align-items: center;
+}
+.buttons{
+    display: flex;
+    margin-left: 50px;
+    margin-top: 15px;
+}
+.Previousdiv{
+    background-color:#7EFF73;
+    color: white;
+    height: 35px;
+    align-self: center;
+    border-radius: 18px;
+    width: 100px;
+    margin-right: 8px;
+}
+.Nextdiv{
+    background-color:#73ABFF;
+    color: white;
+    height: 35px;
+    align-self: center;
+    border-radius: 18px;
+    width: 100px;
+    margin-right: 28px;
+}
+.PostButton{
+    background-color:#FF7373;
+    color: white;
+    height: 35px;
+    align-self: center;
+    border-radius: 18px;
+    width: 100px;
+    margin-left: 190px;
+    border: 0px;
+}
+.Previousdiv > p{
+    margin-top: 6.5px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+.Nextdiv > p{
+    margin-top: 6.5px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 32px;
+}
+.PostButton > p{
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 0px;
+}
+.error{
+    font-size: 10px;
+    color: red;
+}
+
+@media (max-width: 768px){
+    .AddStoryModalContainer {
+        width: 70vw;
+        height: 60vh;
+        margin-top: 19vh;
+    }
+
+    .TabBar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 0;
+    }
+
+    .Tabs {
+        width: auto;
+        margin: 0;
+    }
+
+    .formdiv {
+        padding: 15px;
+    }
+
+    .formHeading, .formDescription, .formImageUrl, .formCategory {
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        margin-left: 0;
+    }
+
+    .form {
+        margin-bottom: 5px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        margin-top: 20px;
+        align-items: center;
+    }
+
+    .Previousdiv, .Nextdiv, .PostButton {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    .AddSixSlideText, .crossIcon {
+        margin-top: 15px;
+    }
 }
