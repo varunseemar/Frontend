@@ -8,8 +8,8 @@ export const ScreenSizeProvider = ({ children }) => {
     const handleResize = ()=>{
       setIsMobile(window.innerWidth <= 768);
     };
-    window.addEventListener('mobile', handleResize);
-    return () => window.removeEventListener('mobile', handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   },[]);
 
   return (

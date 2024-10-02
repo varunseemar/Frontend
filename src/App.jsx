@@ -19,6 +19,7 @@ import { BACKEND_URL } from './utils/constants.js';
 import {ScreenSize} from './ScreenSize.jsx'
 import HeaderMobile from './utilities/Header/HeaderMobile.jsx'
 import LoggedInHeaderMobile from './utilities/Header/LoggedInHeaderMobile.jsx'
+import MobileHeader from './utilities/Header/MobileHeader.jsx'
 
 function App() {
   const [displayRegisterModal,setDisplayRegisterModal] = useState(false);
@@ -39,6 +40,8 @@ function App() {
   const [activeSlide,setActiveSlide] = useState(0);
   const [bookmarkedSlides,setBookmarkedSlides] = useState([]);
   const [likedSlides,setLikedSlides] = useState([]);
+  const [openMobileHeader,setOpenMobileHeader] = useState(false);
+  const [openMobileLoggedInHeader,setOpenMobileLoggedInHeader] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -195,12 +198,14 @@ function App() {
       ? (<LoggedInHeader openBookmarks={openBookmarks} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} />)
       : (<Header openRegisterModal={openRegisterModal} openSignInModal={openSignInModal} />))}
 
-      {isMobile && (isLoggedIn
-      ? (<LoggedInHeaderMobile openBookmarks={openBookmarks} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} />)
-      : (<HeaderMobile openRegisterModal={openRegisterModal} openSignInModal={openSignInModal} />))}
+      {isMobile && (<div className={styles.MobileHeader}><MobileHeader setOpenMobileLoggedInHeader={setOpenMobileLoggedInHeader} setOpenMobileHeader={setOpenMobileHeader} isLoggedIn={isLoggedIn}/></div>)}
+
+      {isMobile && !isLoggedIn && openMobileHeader && (<div className={styles.HeaderMobile}><HeaderMobile setOpenMobileHeader={setOpenMobileHeader} openRegisterModal={openRegisterModal} openSignInModal={openSignInModal} /></div>)}  
+
+      {isMobile && isLoggedIn && openMobileLoggedInHeader && (<div className={styles.LoggedInHeaderMobile}><LoggedInHeaderMobile setOpenMobileLoggedInHeader={setOpenMobileLoggedInHeader} openBookmarks={openBookmarks} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} /></div>)}  
 
       {displayLogout && !isMobile
-      ? <Logout setLikedSlides={setLikedSlides} setDisplayStory={setDisplayStory} setStoryModalContentId={setStoryModalContentId} setIsModalOpen={setIsModalOpen} setBookmarkedSlides={setBookmarkedSlides} setActiveSlide={setActiveSlide} setSavedActiveSlide={setSavedActiveSlide} setStoryModalContent={setStoryModalContent} setIsLoggedIn={setIsLoggedIn} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout}/>
+      ? <div className={styles.LogoutMain}><Logout setLikedSlides={setLikedSlides} setDisplayStory={setDisplayStory} setStoryModalContentId={setStoryModalContentId} setIsModalOpen={setIsModalOpen} setBookmarkedSlides={setBookmarkedSlides} setActiveSlide={setActiveSlide} setSavedActiveSlide={setSavedActiveSlide} setStoryModalContent={setStoryModalContent} setIsLoggedIn={setIsLoggedIn} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout}/></div>
       : ""}
       {location.pathname !== '/bookmarks' && (
         <>
