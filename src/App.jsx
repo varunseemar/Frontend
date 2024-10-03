@@ -202,7 +202,7 @@ function App() {
 
       {isMobile && !isLoggedIn && openMobileHeader && (<div className={styles.HeaderMobile}><HeaderMobile setOpenMobileHeader={setOpenMobileHeader} openRegisterModal={openRegisterModal} openSignInModal={openSignInModal} /></div>)}  
 
-      {isMobile && isLoggedIn && openMobileLoggedInHeader && (<div className={styles.LoggedInHeaderMobile}><LoggedInHeaderMobile setOpenMobileLoggedInHeader={setOpenMobileLoggedInHeader} openBookmarks={openBookmarks} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} /></div>)}  
+      {isMobile && isLoggedIn && openMobileLoggedInHeader && (<div className={styles.LoggedInHeaderMobile}><LoggedInHeaderMobile setIsLoggedIn={setIsLoggedIn} setLikedSlides={setLikedSlides} setDisplayStory={setDisplayStory} setStoryModalContentId={setStoryModalContentId} setIsModalOpen={setIsModalOpen} setBookmarkedSlides={setBookmarkedSlides} setActiveSlide={setActiveSlide} setSavedActiveSlide={setSavedActiveSlide} setStoryModalContent={setStoryModalContent} setOpenMobileLoggedInHeader={setOpenMobileLoggedInHeader} openBookmarks={openBookmarks} openAddStoryModal={openAddStoryModal} setEditUserStory={setEditUserStory} /></div>)}  
 
       {displayLogout && !isMobile
       ? <div className={styles.LogoutMain}><Logout setLikedSlides={setLikedSlides} setDisplayStory={setDisplayStory} setStoryModalContentId={setStoryModalContentId} setIsModalOpen={setIsModalOpen} setBookmarkedSlides={setBookmarkedSlides} setActiveSlide={setActiveSlide} setSavedActiveSlide={setSavedActiveSlide} setStoryModalContent={setStoryModalContent} setIsLoggedIn={setIsLoggedIn} setDisplayLogout={setDisplayLogout} displayLogout={displayLogout}/></div>
