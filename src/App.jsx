@@ -154,9 +154,7 @@ function App() {
     setIsModalOpen();
     if(savedActiveSlide !== null) {
       openStoryModal(); 
-      setTimeout(() => {
-        setActiveSlide(savedActiveSlide);
-      }, 100);
+      setActiveSlide(savedActiveSlide);
       setSavedActiveSlide(null);
     } 
     else{
