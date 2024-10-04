@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useContext} from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../../utils/constants';
 import styles from './StoryDivs.module.css'; 
 import editIcon from '../../Images/tabler_edit.png'
+import {ScreenSize} from '../../ScreenSize.jsx'
 
 const StoryDivs = ({setStoryModalContentId,setStoryModalContent,openStoryModal,isLoggedIn,openAddStoryModal,setEditUserStory,setEditUserStoryId,refreshState,filterCategory,showDivByFilter}) => {
 const [stories,setStories] = useState({});
 const [seeMore,setSeeMore] = useState(null);
 const [userStories,setUserStories] = useState({})
 const [currentUsername,setCurrentUsername] = useState(null);
+const isMobile = useContext(ScreenSize);
 
 useEffect(() => {
   const storedUsername = localStorage.getItem('username');
@@ -82,7 +84,7 @@ const groupStoriesByCategory = (stories) => {
 
 return (
   <div>
-      {isLoggedIn && userStories.length > 0 && (
+      {isLoggedIn && !isMobile && userStories.length > 0 && (
       <div className={styles.categorydiv}>
         <div className={styles.categoryText}>Your Stories</div>
         {userStories.slice(0, seeMore === "Your Stories" ? userStories.length : 4).map((story) => (
@@ -112,7 +114,7 @@ return (
           </div>
         )}
       </div>
-    )}
+      )}
     {Object.keys(stories).map((category) => {
       if(seeMore && seeMore !== category){
         return null;

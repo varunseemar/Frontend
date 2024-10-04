@@ -6,7 +6,7 @@ import styles from './LoggedInHeaderMobile.module.css'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-const LoggedInHeaderMobile = ({setIsLoggedIn,setLikedSlides,setDisplayStory,setStoryModalContentId,setIsModalOpen,setBookmarkedSlides,setActiveSlide,setSavedActiveSlide,setStoryModalContent,setOpenMobileLoggedInHeader,openBookmarks,openAddStoryModal,setEditUserStory}) => {
+const LoggedInHeaderMobile = ({openUserstories,setIsLoggedIn,setLikedSlides,setDisplayStory,setStoryModalContentId,setIsModalOpen,setBookmarkedSlides,setActiveSlide,setSavedActiveSlide,setStoryModalContent,setOpenMobileLoggedInHeader,openBookmarks,openAddStoryModal,setEditUserStory}) => {
   const username = localStorage.getItem('username');
   const navigate = useNavigate();
 
@@ -16,6 +16,7 @@ const LoggedInHeaderMobile = ({setIsLoggedIn,setLikedSlides,setDisplayStory,setS
 
   const handleModal = ()=>{
     setEditUserStory(false);
+    setOpenMobileLoggedInHeader(false);
     openAddStoryModal();
   }
 
@@ -36,6 +37,16 @@ const LoggedInHeaderMobile = ({setIsLoggedIn,setLikedSlides,setDisplayStory,setS
     setOpenMobileLoggedInHeader(false);
   }
 
+  const handleUserStories = ()=>{
+    openUserstories();
+    setOpenMobileLoggedInHeader(false);
+  }
+
+  const handleBookmark = ()=>{
+    openBookmarks();
+    setOpenMobileLoggedInHeader(false);
+  }
+
   return (
     <div className={styles.LoggedInHeader}>
       <div className={styles.firstLine}>
@@ -50,14 +61,14 @@ const LoggedInHeaderMobile = ({setIsLoggedIn,setLikedSlides,setDisplayStory,setS
         </div>
       </div>
       <div className={styles.lowerDivs}>
-        <div className={styles.YourStoryLoggedInHeader}>
+        <div className={styles.YourStoryLoggedInHeader} onClick={handleUserStories}>
             <p>Your Story</p>
         </div>
         <div className={styles.AddStoryLoggedInHeader} onClick={handleModal}>
             <p>Add Story</p>
         </div>
-        <div className={styles.BookmarksLoggedInHeader} >
-            <span><img className={styles.BookmarkImageLoggedInHeader} src={Bookmark} onClick={openBookmarks}></img>
+        <div className={styles.BookmarksLoggedInHeader} onClick={handleBookmark}>
+            <span><img className={styles.BookmarkImageLoggedInHeader} src={Bookmark} ></img>
             Bookmarks</span>
         </div>
         <div className={styles.AddStoryLoggedInHeader} onClick={handleLogout}>

@@ -9,6 +9,7 @@ const AppRoutes = () => {
         <Route path="/story/:storyId/:slideId" element={<App />} />
         <Route path="/" element={<App />} />
         <Route path="/bookmarks/*" element={<App />} />
+        <Route path="/userstories/*" element={<App />} />
         <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
